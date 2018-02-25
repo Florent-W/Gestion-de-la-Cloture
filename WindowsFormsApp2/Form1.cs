@@ -20,12 +20,96 @@ namespace WindowsFormsApp2
 
     public partial class Form1 : Form
     {
+
+        public void selectionFiche()
+        {
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = connexion;
+            command.CommandText = "SELECT * FROM fichefrais";
+
+            DataTable data = new DataTable();
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+            adapter.Fill(data);
+
+            dataGridView1.DataSource = data;
+
+        }
+
+        public void selectionFicheMoisPrecedent()
+        {
+            MySqlCommand commandSelectFiche = new MySqlCommand();
+            string moisPrecedent = getMoisPrecedent();
+            string annee = getAnnee();
+
+            string moisSelectionner = annee + moisPrecedent;
+            commandSelectFiche.Connection = connexion;
+            commandSelectFiche.CommandText = "SELECT * FROM fichefrais where mois='"+moisSelectionner+"'";
+            
+            DataTable dataFiche = new DataTable();
+
+            MySqlDataAdapter adapterFiche = new MySqlDataAdapter(commandSelectFiche);
+
+            adapterFiche.Fill(dataFiche);
+
+            dataGridView1.DataSource = dataFiche;
+
+        }
+
+        public void miseAJourFicheValidation()
+        {
+            MySqlCommand commandSelectFiche = new MySqlCommand();
+            string moisPrecedent = getMoisPrecedent();
+            string annee = getAnnee();
+
+            string moisSelectionner = annee + moisPrecedent;
+
+            commandSelectFiche.Connection = connexion;
+            commandSelectFiche.CommandText = "UPDATE fichefrais SET idEtat='CL' WHERE mois='"+moisSelectionner+"'";
+
+            commandSelectFiche.ExecuteNonQuery(); 
+
+        }
+
+        public void miseAJourFicheRemboursement() 
+        {
+            MySqlCommand commandSelectFiche = new MySqlCommand();
+            string moisPrecedent = getMoisPrecedent();
+            string annee = getAnnee();
+
+            string moisSelectionner = annee + moisPrecedent;
+
+            commandSelectFiche.Connection = connexion;
+            commandSelectFiche.CommandText = "UPDATE fichefrais SET idEtat='RB' WHERE mois='"+moisSelectionner+"' AND idEtat='VA'";
+
+            commandSelectFiche.ExecuteNonQuery();
+        }
+
+        public static string getAnnee()
+        {
+            string annee; 
+
+            if (DateTime.Now.ToString("MM") != "01")
+            {
+                 annee = DateTime.Now.ToString("yyyy");
+            }
+
+            else
+            {
+                 annee = DateTime.Now.AddMonths(-1).ToString("yyyy");
+            }
+
+            return annee;
+
+        }
+
         public static string getMoisPrecedent()
         {
             string moisPrecedent = DateTime.Now.AddMonths(-1).ToString("MM");
 
             return moisPrecedent;
         }
+
 
         public static DateTime getMoisPrecedent(DateTime date)
         {
@@ -46,6 +130,37 @@ namespace WindowsFormsApp2
             return moisSuivant;
         }
 
+        public static Boolean entre(int jour1, int jour2)
+        {
+            DateTime dateActuel = DateTime.Now;
+            int jour = dateActuel.Day;
+
+            if (jour >= jour1 && jour <= jour2)
+            {
+
+                return true;
+            }
+            else
+            {
+                return false; 
+            }
+        }
+        
+
+        public static Boolean entre(int jour1, int jour2, DateTime dateTest)
+        {
+            int jour = dateTest.Day;
+
+            if (jour >= jour1 && jour <= jour2)
+            {
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         MySqlConnection connexion = new MySqlConnection("database=gsb_frais; server=localhost; user id=root");
 
@@ -66,7 +181,7 @@ namespace WindowsFormsApp2
             }
 
 
-         // string moisPrecedent = getMoisPrecedent();
+            // string moisPrecedent = getMoisPrecedent();
             /// MessageBox.Show(moisPrecedent);
 
             //   DateTime uneDate = DateTime.Now;
@@ -75,16 +190,42 @@ namespace WindowsFormsApp2
 
             //    MessageBox.Show(moisPrecedentDerive.ToString());
 
-            string moisSuivant = getMoisSuivant();
+            // string moisSuivant = getMoisSuivant();
 
-            MessageBox.Show(moisSuivant);
+            //  MessageBox.Show(moisSuivant);
 
-            DateTime uneDate = DateTime.Now;
+            //   DateTime uneDate = DateTime.Now;
 
-            DateTime moisSuivantDerive = getMoisSuivant(uneDate);
+            //  DateTime moisSuivantDerive = getMoisSuivant(uneDate);
 
-            MessageBox.Show(moisSuivantDerive.ToString());
+            //  MessageBox.Show(moisSuivantDerive.ToString());
 
+           // int jour1 = 2, jour2 = 25;
+          //  DateTime date = DateTime.Now; 
+
+          //  Boolean jourEntre = entre(jour1, jour2); 
+
+            //    if(jourEntre == true)
+            //   {
+            //        MessageBox.Show("Le jour est entre");
+            //   }
+            //  else if(jourEntre == false) 
+            //  {
+            //      MessageBox.Show("Le jour n'est pas entre");
+            //   }
+
+           /* Boolean jourEntre = entre(jour1, jour2, date);
+
+            if (jourEntre == true)
+            {
+                MessageBox.Show("Le jour est entre");
+            }
+            else if (jourEntre == false)
+            {
+                MessageBox.Show("Le jour n'est pas entre");
+            }
+
+     */
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -101,15 +242,43 @@ namespace WindowsFormsApp2
         {
 
             MySqlCommand command = new MySqlCommand();
+
             command.Connection = connexion;
+            
+
             command.CommandText = "SELECT prenom FROM visiteur";
+
 
             DataTable data = new DataTable();
 
+
             MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+
             adapter.Fill(data);
 
-            dataGridView1.DataSource = data; 
+            dataGridView1.DataSource = data;
+
+           // selectionFiche();
+
+            selectionFiche();
+            if (entre(1, 10))
+            {
+                MessageBox.Show("Le jour est entre");
+                miseAJourFicheValidation();
+                selectionFiche();
+            }
+            else if(entre(20,25))
+            {
+                MessageBox.Show("remboursé");
+                miseAJourFicheRemboursement();
+                selectionFiche();
+            }
+            else
+            {
+                MessageBox.Show("Le jour n'est pas entre");
+
+            }
+            // miseAJourFiche();
         }
     }
 }
