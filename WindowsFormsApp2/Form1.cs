@@ -16,14 +16,37 @@ using MySql.Data.MySqlClient;
 namespace WindowsFormsApp2
 {
 
-    
+
 
     public partial class Form1 : Form
     {
-        void SayHello()
+        public static string getMoisPrecedent()
         {
-            MessageBox.Show("coucou");
+            string moisPrecedent = DateTime.Now.AddMonths(-1).ToString("MM");
+
+            return moisPrecedent;
         }
+
+        public static DateTime getMoisPrecedent(DateTime date)
+        {
+            DateTime moisPrecedent = date.AddMonths(-1);
+            return moisPrecedent;
+        }
+
+        public static string getMoisSuivant()
+        {
+            string moisSuivant = DateTime.Now.AddMonths(+1).ToString("MM");
+
+            return moisSuivant;
+        }
+
+        public static DateTime getMoisSuivant(DateTime date)
+        {
+            DateTime moisSuivant = date.AddMonths(+1);
+            return moisSuivant;
+        }
+
+
         MySqlConnection connexion = new MySqlConnection("database=gsb_frais; server=localhost; user id=root");
 
         public Form1()
@@ -42,9 +65,28 @@ namespace WindowsFormsApp2
                 MessageBox.Show("Erreur");
             }
 
-            SayHello(); 
+
+         // string moisPrecedent = getMoisPrecedent();
+            /// MessageBox.Show(moisPrecedent);
+
+            //   DateTime uneDate = DateTime.Now;
+
+            //     DateTime moisPrecedentDerive = getMoisPrecedent(uneDate);
+
+            //    MessageBox.Show(moisPrecedentDerive.ToString());
+
+            string moisSuivant = getMoisSuivant();
+
+            MessageBox.Show(moisSuivant);
+
+            DateTime uneDate = DateTime.Now;
+
+            DateTime moisSuivantDerive = getMoisSuivant(uneDate);
+
+            MessageBox.Show(moisSuivantDerive.ToString());
+
         }
- 
+
         private void button1_Click(object sender, EventArgs e)
         {
            
