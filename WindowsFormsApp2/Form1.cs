@@ -53,7 +53,7 @@ namespace WindowsFormsApp2
             adapterFiche.Fill(dataFiche);
 
             dataGridView1.DataSource = dataFiche;
-
+             
         }
 
         public void miseAJourFicheValidation()
