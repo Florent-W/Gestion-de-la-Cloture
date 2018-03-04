@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp2", "Windows
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsService1", "..\WindowsService1\WindowsService1\WindowsService1.csproj", "{5087ECCC-06F2-4AC2-BA18-BE8C52736D2C}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installation du programme de Gestion des clôtures", "..\WindowsService1\ServiceSetup\ServiceSetup.vdproj", "{8F7830A3-CDD0-4015-85D7-911E5A902B8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5087ECCC-06F2-4AC2-BA18-BE8C52736D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5087ECCC-06F2-4AC2-BA18-BE8C52736D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5087ECCC-06F2-4AC2-BA18-BE8C52736D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F7830A3-CDD0-4015-85D7-911E5A902B8C}.Debug|Any CPU.ActiveCfg = Debug
+		{8F7830A3-CDD0-4015-85D7-911E5A902B8C}.Debug|Any CPU.Build.0 = Debug
+		{8F7830A3-CDD0-4015-85D7-911E5A902B8C}.Release|Any CPU.ActiveCfg = Release
+		{8F7830A3-CDD0-4015-85D7-911E5A902B8C}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
