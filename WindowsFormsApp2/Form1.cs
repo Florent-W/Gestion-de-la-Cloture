@@ -265,7 +265,7 @@ namespace WindowsFormsApp2
             {
                 MessageBox.Show("Le jour est entre");
                 miseAJourFicheValidation();
-                selectionFiche();
+                selectionFiche(); 
             }
             else if(entre(20,25))
             {
